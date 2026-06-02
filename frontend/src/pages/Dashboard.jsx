@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserEvents, deleteUserEvent, updateEventStatus } from '../services/eventService';
@@ -95,12 +96,17 @@ function Dashboard() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          
-          <div className="md:col-span-1">
-            <EventForm onEventCreated={handleNewEvent} />
-            <HabitWidget />
-          </div>
+<EventForm onEventCreated={handleNewEvent} />
 
+<div className="mt-6 flex flex-col gap-4">
+  <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+    <span className="font-bold text-gray-700">Gestión de Hábitos</span>
+    <Link to="/habits" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition text-sm">
+      + Administrar
+    </Link>
+  </div>
+  <HabitWidget />
+</div>
           <div className="md:col-span-2">
             <h2 className="text-xl font-bold text-gray-700 mb-4">Tus Próximas Tareas</h2>
             
@@ -140,7 +146,6 @@ function Dashboard() {
                         Eliminar
                       </button>
                     </div>
-
                   </div>
                 ))}
               </div>

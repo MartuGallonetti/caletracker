@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; // Importamos el Dashboard
+import Habits from './pages/Habits';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           
           {/* Nueva ruta del panel principal */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/habits" element={<Habits />} />
         </Routes>
       </div>
     </Router>

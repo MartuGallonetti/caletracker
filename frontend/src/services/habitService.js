@@ -1,4 +1,4 @@
-// Traer todos los hábitos del usuario
+// Trae todos los hábitos del usuario
 export const fetchUserHabits = async (token) => {
     const response = await fetch("http://localhost:3000/api/habits", {
         headers: {
@@ -11,7 +11,7 @@ export const fetchUserHabits = async (token) => {
     return data;
 };
 
-// Enviar el estado diario del hábito (completado, pospuesto, no_cumplido)
+// Envia el estado diario del hábito (completado, pospuesto, no_cumplido)
 export const logHabitStatus = async (id, status, token) => {
     const response = await fetch(`http://localhost:3000/api/habits/${id}/log`, {
         method: "POST",
@@ -25,5 +25,21 @@ export const logHabitStatus = async (id, status, token) => {
     const data = await response.json();
     if (!response.ok)
         throw new Error(data.error || "Error al registrar estado");
+    return data;
+};
+
+// Crea un nuevo hábito
+export const createNewHabit = async (title, token) => {
+    const response = await fetch("http://localhost:3000/api/habits", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Error al crear el hábito");
     return data;
 };
