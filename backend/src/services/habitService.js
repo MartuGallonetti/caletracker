@@ -50,3 +50,12 @@ export const logHabitDaily = async (userId, habitId, status) => {
 
     return logResult.rows[0];
 };
+
+// Borrar un hábito de la base de datos
+export const deleteUserHabit = async (userId, habitId) => {
+    const result = await pool.query(
+        "DELETE FROM habits WHERE id = $1 AND user_id = $2 RETURNING *",
+        [habitId, userId],
+    );
+    return result.rows[0];
+};

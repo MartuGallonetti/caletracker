@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { fetchUserHabits, createNewHabit } from '../services/habitService';
+import { fetchUserHabits, createNewHabit, deleteHabitAPI } from '../services/habitService';
 
 function Habits() {
 const navigate = useNavigate();
@@ -40,6 +40,20 @@ const handleSubmit = async (e) => {
       console.error('Error al crear:', error);
     }
   };
+
+  const handleDelete = async (id) => {
+  const confirmar = window.confirm("¿Segura que querés eliminar este hábito? Se borrará todo su historial.");
+  if (!confirmar) return;
+
+  const token = localStorage.getItem('token');
+  try {
+    await deleteHabitAPI(id, token);
+    // Esto saca el hábito de la pantalla inmediatamente sin recargar
+    setHabits((prev) => prev.filter((habit) => habit.id !== id));
+  } catch (error) {
+    console.error('Error al eliminar el hábito:', error);
+  }
+};
 
   return (
     <div className="min-h-screen w-full bg-gray-100 p-8">
@@ -89,15 +103,23 @@ const handleSubmit = async (e) => {
               <p className="text-gray-500">No tenés hábitos registrados.</p>
             ) : (
               <ul className="flex flex-col gap-3">
-                {habits.map((habit) => (
-                  <li key={habit.id} className="p-3 bg-white border border-gray-200 rounded-lg shadow-sm flex justify-between items-center">
-                    <span className="font-bold text-gray-800">{habit.title}</span>
-                    <span className="text-sm font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                      Racha récord: {habit.longest_streak}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+  {habits.map((habit) => (
+    <li key={habit.id} className="p-3 bg-white border border-gray-200 rounded-lg shadow-sm flex justify-between items-center">
+      <div>
+        <span className="font-bold text-gray-800 block">{habit.title}</span>
+        <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded inline-block mt-1">
+          Racha récord: {habit.longest_streak}
+        </span>
+      </div>
+      <button
+        onClick={() => handleDelete(habit.id)}
+        className="bg-red-100 text-red-600 px-3 py-2 rounded-lg font-bold hover:bg-red-200 transition text-sm"
+      >
+        Eliminar
+      </button>
+    </li>
+  ))}
+</ul>
             )}
           </div>
         </div>

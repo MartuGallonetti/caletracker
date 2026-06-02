@@ -1,4 +1,4 @@
-// Trae todos los hábitos del usuario
+// Traer todos los hábitos del usuario
 export const fetchUserHabits = async (token) => {
     const response = await fetch("http://localhost:3000/api/habits", {
         headers: {
@@ -11,7 +11,7 @@ export const fetchUserHabits = async (token) => {
     return data;
 };
 
-// Envia el estado diario del hábito (completado, pospuesto, no_cumplido)
+// Enviar el estado diario del hábito (completado, pospuesto, no_cumplido)
 export const logHabitStatus = async (id, status, token) => {
     const response = await fetch(`http://localhost:3000/api/habits/${id}/log`, {
         method: "POST",
@@ -28,7 +28,7 @@ export const logHabitStatus = async (id, status, token) => {
     return data;
 };
 
-// Crea un nuevo hábito
+// Crear un nuevo hábito
 export const createNewHabit = async (title, token) => {
     const response = await fetch("http://localhost:3000/api/habits", {
         method: "POST",
@@ -41,5 +41,20 @@ export const createNewHabit = async (title, token) => {
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Error al crear el hábito");
+    return data;
+};
+
+// NUEVA FUNCIÓN: Eliminar un hábito
+export const deleteHabitAPI = async (id, token) => {
+    const response = await fetch(`http://localhost:3000/api/habits/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json();
+    if (!response.ok)
+        throw new Error(data.error || "Error al eliminar el hábito");
     return data;
 };

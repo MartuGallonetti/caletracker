@@ -2,6 +2,7 @@ import {
     createNewHabit,
     getUserHabits,
     logHabitDaily,
+    deleteUserHabit,
 } from "../services/habitService.js";
 
 export const createHabit = async (req, res) => {
@@ -39,6 +40,29 @@ export const logHabit = async (req, res) => {
         res.status(200).json({ mensaje: "Estado registrado", log });
     } catch (error) {
         console.error("Error al registrar hábito:", error.message);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+export const deleteHabit = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+        const habitBorrado = await deleteUserHabit(userId, id);
+
+        if (!habitBorrado) {
+            return res
+                .status(404)
+                .json({ error: "Hábito no encontrado o no autorizado" });
+        }
+
+        res.status(200).json({
+            mensaje: "Hábito eliminado exitosamente",
+            habitBorrado,
+        });
+    } catch (error) {
+        console.error("Error al eliminar hábito:", error.message);
         res.status(500).json({ error: "Error interno del servidor" });
     }
 };
