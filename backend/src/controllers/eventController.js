@@ -6,7 +6,16 @@ import {
 } from "../services/eventService.js";
 
 export const createEvent = async (req, res) => {
-    const { title, description, start_time, end_time } = req.body;
+    const {
+        title,
+        description,
+        start_time,
+        end_time,
+        priority,
+        category_id,
+        all_day,
+    } = req.body;
+
     const userId = req.user.id;
 
     try {
@@ -16,14 +25,20 @@ export const createEvent = async (req, res) => {
             description,
             start_time,
             end_time,
+            priority,
+            category_id,
+            all_day,
         );
-        res.status(201).json({ mensaje: "Evento creado exitosamente", evento });
+
+        res.status(201).json({
+            mensaje: "Evento creado exitosamente",
+            evento,
+        });
     } catch (error) {
         console.error("Error al crear evento:", error.message);
         res.status(500).json({ error: "Error interno del servidor" });
     }
 };
-
 export const getEvents = async (req, res) => {
     const userId = req.user.id;
 

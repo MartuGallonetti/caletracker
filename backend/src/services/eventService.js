@@ -6,11 +6,37 @@ export const createNewEvent = async (
     description,
     start_time,
     end_time,
+    priority = "media",
+    category_id = null,
+    all_day = false,
 ) => {
     const result = await pool.query(
-        "INSERT INTO events (user_id, title, description, start_time, end_time) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-        [userId, title, description, start_time, end_time],
+        `
+        INSERT INTO events (
+            user_id,
+            title,
+            description,
+            start_time,
+            end_time,
+            priority,
+            category_id,
+            all_day
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *
+        `,
+        [
+            userId,
+            title,
+            description,
+            start_time,
+            end_time,
+            priority,
+            category_id,
+            all_day,
+        ],
     );
+
     return result.rows[0];
 };
 

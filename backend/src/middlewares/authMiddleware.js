@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const verifyToken = (req, res, next) => {
-    // 1. Buscar el token en los encabezados de la petición
     const token = req.header("Authorization");
 
     if (!token) {

@@ -57,7 +57,7 @@ const Categories = () => {
         
         try {
             const token = getToken();
-            const response = await fetch('http://localhost:5000/api/categories', {
+            const response = await fetch('http://localhost:3000/api/categories', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
