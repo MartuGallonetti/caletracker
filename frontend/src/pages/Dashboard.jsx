@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link ,  Outlet } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserEvents, deleteUserEvent, updateEventStatus } from '../services/eventService';
@@ -99,12 +99,29 @@ function Dashboard() {
 <EventForm onEventCreated={handleNewEvent} />
 
 <div className="mt-6 flex flex-col gap-4">
+
   <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200">
     <span className="font-bold text-gray-700">Gestión de Hábitos</span>
-    <Link to="/habits" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition text-sm">
+
+    <Link
+      to="/dashboard/habits"
+      className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition text-sm"
+    >
       + Administrar
     </Link>
   </div>
+
+  <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+    <span className="font-bold text-gray-700">Mis Mundos</span>
+
+    <Link
+      to="/dashboard/categories"
+      className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-purple-700 transition text-sm"
+    >
+      Configurar
+    </Link>
+  </div>
+
   <HabitWidget />
 </div>
           <div className="md:col-span-2">
